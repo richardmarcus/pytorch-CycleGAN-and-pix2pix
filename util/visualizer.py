@@ -34,14 +34,22 @@ def save_images(webpage, visuals, image_path, aspect_ratio=1.0, width=256, use_w
     short_path = ntpath.basename(image_path[0])
     name = os.path.splitext(short_path)[0]
 
+    SAVE_ALL = False
     webpage.add_header(name)
     ims, txts, links = [], [], []
     ims_dict = {}
     for label, im_data in visuals.items():
         im = util.tensor2im(im_data)
-        image_name = '%s_%s.png' % (name, label)
-        save_path = os.path.join(image_dir, image_name)
-        util.save_image(im, save_path, aspect_ratio=aspect_ratio)
+        if SAVE_ALL:
+            image_name = '%s_%s.png' % (name, label)
+            save_path = os.path.join(image_dir, image_name)
+            util.save_image(im, save_path, aspect_ratio=aspect_ratio)
+        else:
+            image_name = '%s.png' % (name)
+            save_path = os.path.join(image_dir, image_name)
+            #if label contains fake then save the image
+            if 'fake' in label:
+                util.save_image(im, save_path, aspect_ratio=aspect_ratio)
         ims.append(image_name)
         txts.append(label)
         links.append(image_name)
