@@ -41,10 +41,10 @@ class AlignedDataset(BaseDataset):
         # read a image given a random integer index
         AB_path = self.AB_paths[index]
         AB = Image.open(AB_path)
-        AB = np.array(AB)
+        #AB = np.array(AB)
         #divide by 256
-        AB = AB/256
-        AB = Image.fromarray(AB)
+        #AB = AB/256
+        #AB = Image.fromarray(AB)
         AB = AB.convert('RGB')
 
     
